@@ -1,4 +1,4 @@
-package com.debadri.doin;
+package com.stcet.todoapp;
 
 import android.app.Application;
 

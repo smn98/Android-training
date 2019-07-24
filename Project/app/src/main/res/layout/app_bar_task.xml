@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TaskActivity">
@@ -20,14 +21,30 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_task" />
+    <include
+        layout="@layout/content_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/baseline_add_black_24dp" />
+        android:alpha="0.7"
+        android:background="#40C2D3"
+        app:srcCompat="@drawable/baseline_add_black_24dp"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/fab_margin"
+        android:alpha="0.7"
+        android:background="#F13123"
+        android:text="Remove all" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

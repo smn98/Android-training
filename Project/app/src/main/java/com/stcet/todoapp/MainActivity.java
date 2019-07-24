@@ -1,4 +1,4 @@
-package com.debadri.doin;
+package com.stcet.todoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,13 +11,16 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmMigrationNeededException;
 
 public class MainActivity extends AppCompatActivity {
 
     public static TextInputEditText mUserName;
     private Button mLoginBtn;
+    private Realm realm;
 
 
     @Override
@@ -28,7 +31,19 @@ public class MainActivity extends AppCompatActivity {
         mUserName=(TextInputEditText)findViewById(R.id.main_userName);
         mLoginBtn=(Button)findViewById(R.id.main_btn);
 
-        Realm realm = Realm.getDefaultInstance();
+
+        try{
+            realm = Realm.getDefaultInstance();
+
+        }catch (RealmMigrationNeededException e){
+
+            // Get a Realm instance for this thread
+            RealmConfiguration config = new RealmConfiguration.Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            realm = Realm.getInstance(config);
+
+        }
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     Intent intent=new Intent(MainActivity.this, TaskActivity.class);
+                    intent.putExtra("UserName",mUserName.getText().toString());
                     startActivity(intent);
                     finish();
 

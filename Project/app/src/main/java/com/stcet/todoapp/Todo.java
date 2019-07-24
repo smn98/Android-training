@@ -1,8 +1,6 @@
-package com.debadri.doin;
+package com.stcet.todoapp;
 
-import io.realm.RealmModel;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class Todo extends RealmObject{
     private long id;

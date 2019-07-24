@@ -1,4 +1,4 @@
-package com.debadri.doin;
+package com.stcet.todoapp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -7,8 +7,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,14 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 public class TodoActivity extends AppCompatActivity {
-    EditText item, details, color;
+    EditText item, details;
     TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private static final String TAG = "MainActivity";
+    private String mUserName;
+    Spinner mstaticSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,22 @@ public class TodoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_todo);
         item = findViewById(R.id.main_item_et);
         details = findViewById(R.id.main_details_et);
-        color = findViewById(R.id.main_color_et);
         mDisplayDate = findViewById(R.id.main_date_tv);
+
+        //dropdown
+        mstaticSpinner=(Spinner)findViewById(R.id.todo_spinner);
+
+        String[] items = new String[] { "Blue", "Green", "Yellow", "Red" };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mstaticSpinner.setAdapter(adapter);
+        mstaticSpinner.setSelection(0);
+        ////////////////////
+
+        Intent i = getIntent();
+        mUserName = i.getStringExtra("UserName");
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -52,18 +68,19 @@ public class TodoActivity extends AppCompatActivity {
         Realm r = Realm.getDefaultInstance();
         r.beginTransaction();
         try{
-            Todo todo = new Todo();
-            todo.setUserName("sumon");
+            Todo todo = r.createObject(Todo.class);
+            todo.setUserName(mUserName);
             todo.setTodoItem(item.getText().toString());
             todo.setDetails(details.getText().toString());
             todo.setDuedate(mDisplayDate.getText().toString());
-            todo.setColor(color.getText().toString());
-            RealmQuery<UserInfo> query = r.where(UserInfo.class).equalTo("userName", MainActivity.mUserName.getText().toString());
-            RealmResults<UserInfo> result = query.findAllAsync();
-            result.load();
+            todo.setColor(mstaticSpinner.getSelectedItem().toString());
+//            RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", mUserName);
+//            RealmResults<Todo> result = query.findAllAsync();
+//            result.load();
             r.commitTransaction();
             r.close();
-            Toast.makeText(this,result.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"New todo created",Toast.LENGTH_LONG).show();
+            finish();
         }
         catch (Exception e){
             r.cancelTransaction();
@@ -88,7 +105,6 @@ public class TodoActivity extends AppCompatActivity {
 
 
     public void DiscardTask(View view) {
-        Intent i=new Intent(this,TaskActivity.class);
-        startActivity(i);
+        finish();
     }
 }
