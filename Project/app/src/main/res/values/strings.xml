@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">DoIn</string>
-    <string name="title_activity_task">TaskActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="app_name">TodoApp</string>
+    <string name="title_activity_task">Your Todos</string>
+    <string name="navigation_drawer_open">nav drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">TodoApp</string>
+    <string name="nav_header_subtitle">com.stcet.todoapp</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 

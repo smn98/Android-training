@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.Realm;
 
@@ -48,6 +50,12 @@ public class TodoActivity extends AppCompatActivity {
         mstaticSpinner.setSelection(0);
         ////////////////////
 
+        //edit text to todays date
+        Date today = Calendar.getInstance().getTime();//getting date
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");//formating according to my need
+        String date = formatter.format(today);
+        mDisplayDate.setText(date);
+
         Intent i = getIntent();
         mUserName = i.getStringExtra("UserName");
 
@@ -55,9 +63,9 @@ public class TodoActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                Log.d(TAG,"onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+                Log.d(TAG,"onDateSet: dd/mm/yyy: " + day + "/" + month + "/" + year);
 
-                String date = month + "/" + day + "/" + year;
+                String date = day + "/" + month + "/" + year;
                 mDisplayDate.setText(date);
             }
         };
